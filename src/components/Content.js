@@ -3,7 +3,7 @@ import Button from "./Button";
 
 class Content extends Component {
   state = {
-    socials: ["google", "fb", "sfsdf"]
+    socials: ["google", "github", "twitter"]
   };
 
   render() {
@@ -11,8 +11,8 @@ class Content extends Component {
       <div className="flexcontainer">
         <div className="signin">
           <h1 className="sign-in__heading">Sign in</h1>
-          {this.state.map(s => (
-            <Button text={s} />
+          {this.state.socials.map((s, key) => (
+            <Button key={key} text={s} />
           ))}
         </div>
       </div>
