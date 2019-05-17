@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TodoForm from "./TodoForm";
 import TodoFilter from "./TodoFilter";
-import stringify from "querystring";
 import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
@@ -16,14 +15,14 @@ class TodoList extends Component {
   };
   render() {
     return (
-      <>
-        <div className="content-container">
-          <div className="content">
-            <TodoForm onSubmit={this.addTodo} />
-            {JSON.stringify(this.state.todos)}
-          </div>
+      <div className="content-container">
+        <div className="content">
+          <TodoForm onSubmit={this.addTodo} />
+          {this.state.todos.map(todo => (
+            <div key={todo.id}>{todo.text}</div>
+          ))}
         </div>
-      </>
+      </div>
     );
   }
 }
