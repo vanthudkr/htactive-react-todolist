@@ -4,7 +4,7 @@ import "./Login.css";
 
 class Login extends Component {
   render() {
-    return <Content />;
+    return <Content onLogin={this.props.onLogin} />;
   }
 }
 

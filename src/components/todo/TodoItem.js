@@ -3,19 +3,19 @@ import React, { Component } from "react";
 class TodoItem extends Component {
   render() {
     return (
-      <div class="task-list">
-        <div class="task-item" tabindex="0">
-          <div class="cell">
-            <button class="btn btn--icon task-item__button" type="button">
-              <i class="fas fa-check" />
+      <div className="task-list">
+        <div className="task-item" tabindex="0">
+          <div className="cell">
+            <button className="btn btn--icon task-item__button" type="button">
+              <i className="fas fa-check" />
             </button>
           </div>
-          <div class={"cell" + " task-name"}>
-            <div class="task-item__title" tabindex="0">
+          <div className={"cell" + " task-name"}>
+            <div className="task-item__title" tabindex="0">
               kokoko
             </div>
           </div>
-          <div class="cell">
+          <div className="cell">
             <button class="btn btn--icon task-item__button" type="button">
               <i class="fas fa-pencil-alt" />
             </button>
@@ -24,21 +24,21 @@ class TodoItem extends Component {
             </button>
           </div>
         </div>
-        <div class="task-item task-item--completed" tabindex="0">
-          <div class="cell">
+        <div className="task-item task-item--completed" tabindex="0">
+          <div className="cell">
             <button
-              class="btn btn--icon task-item__button-completed"
+              className="btn btn--icon task-item__button-completed"
               type="button"
             >
-              <i class="fas fa-check" />
+              <i className="fas fa-check" />
             </button>
           </div>
-          <div class={"cell" + " task-name"}>
-            <div class="task-item__title" tabindex="0">
+          <div className={"cell" + " task-name"}>
+            <div className="task-item__title" tabindex="0">
               kmokm
             </div>
           </div>
-          <div class="cell">
+          <div className="cell">
             <button class="btn btn--icon task-item__button" type="button">
               <i class="fas fa-pencil-alt" />
             </button>

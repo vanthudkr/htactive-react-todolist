@@ -12,7 +12,7 @@ class Content extends Component {
         <div className="signin">
           <h1 className="sign-in__heading">Sign in</h1>
           {this.state.socials.map((s, key) => (
-            <Button key={key} text={s} />
+            <Button key={key} text={s} onLogin={this.props.onLogin} />
           ))}
         </div>
       </div>

@@ -1,21 +1,29 @@
 import React, { Component } from "react";
+import TodoForm from "./TodoForm";
+import TodoFilter from "./TodoFilter";
+import stringify from "querystring";
+import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
+  state = {
+    todos: []
+  };
+
+  addTodo = todo => {
+    this.setState({
+      todos: [todo, ...this.state.todos]
+    });
+  };
   render() {
     return (
-      <ul class="task-filters">
-        <li>
-          <a class="active" href="#">
-            View All
-          </a>
-        </li>
-        <li>
-          <a href="active.html">Active</a>
-        </li>
-        <li>
-          <a href="completed.html">Completed</a>
-        </li>
-      </ul>
+      <>
+        <div className="content-container">
+          <div className="content">
+            <TodoForm onSubmit={this.addTodo} />
+            {JSON.stringify(this.state.todos)}
+          </div>
+        </div>
+      </>
     );
   }
 }
