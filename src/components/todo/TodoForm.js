@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import generate from "@babel/generator";
+import React from "react";
 import shortid from "shortid";
 
-class TodoForm extends Component {
+export default class TodoForm extends React.Component {
   state = {
     text: ""
   };
@@ -21,24 +20,21 @@ class TodoForm extends Component {
       complete: false
     });
     this.setState({
-      text: "     "
+      text: ""
     });
   };
 
   render() {
     return (
-      <from onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <input
           className="task-form__input"
           name="text"
           value={this.state.text}
           onChange={this.handleChange}
-          placeholder="What need to be done?"
+          placeholder="todo..."
         />
-        <button onclick={this.handleChange}>Add Todo</button>
-      </from>
+      </form>
     );
   }
 }
-
-export default TodoForm;
