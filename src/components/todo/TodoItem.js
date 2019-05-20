@@ -10,7 +10,7 @@ class TodoItem extends Component {
               <i className="fas fa-check" />
             </button>
           </div>
-          <div className={"cell" + " task-name"}>
+          <div className="cell task-name">
             <div className="task-item__title" tabindex="0">
               kokoko
             </div>
@@ -33,7 +33,7 @@ class TodoItem extends Component {
               <i className="fas fa-check" />
             </button>
           </div>
-          <div className={"cell" + " task-name"}>
+          <div className="cell task-name">
             <div className="task-item__title" tabindex="0">
               kmokm
             </div>

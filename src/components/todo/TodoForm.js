@@ -17,6 +17,7 @@ export default class TodoForm extends React.Component {
     this.props.onSubmit({
       id: shortid.generate(),
       text: this.state.text,
+      isEdit: false,
       complete: false
     });
     this.setState({
@@ -32,7 +33,7 @@ export default class TodoForm extends React.Component {
           name="text"
           value={this.state.text}
           onChange={this.handleChange}
-          placeholder="todo..."
+          placeholder="What needs to be done?"
         />
       </form>
     );

@@ -123,6 +123,7 @@ input {
 }
 
 .task-form__input__edit {
+  margin-right: 423px;
   padding-left: 20px;
   padding-top: 10px;
   outline: none;
@@ -136,6 +137,10 @@ input {
   color: #fff;
   background: transparent;
   -webkit-font-smoothing: antialiased;
+}
+
+.task-edit {
+  border-bottom: 1px dotted #fff;
 }
 
 .item-input {
@@ -195,6 +200,12 @@ input {
   color: #fff;
   font-size: 1.125rem;
   font-weight: 300;
+}
+
+.divide {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .cell:first-child,

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import TodoForm from "./TodoForm";
-import TodoFilter from "./TodoFilter";
-import TodoItem from "./TodoItem";
 import Todo from "./Todo";
 
 class TodoList extends Component {
@@ -19,6 +17,24 @@ class TodoList extends Component {
     });
   };
 
+  updateTodo = (text, id) => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          //supose to update
+          return {
+            ...todo,
+            text: text,
+            isEdit: false,
+            complete: false
+          };
+        } else {
+          return todo;
+        }
+      })
+    });
+  };
+
   toggleComplete = id => {
     this.setState({
       todos: this.state.todos.map(todo => {
@@ -27,6 +43,22 @@ class TodoList extends Component {
           return {
             ...todo,
             complete: !todo.complete
+          };
+        } else {
+          return todo;
+        }
+      })
+    });
+  };
+
+  closeTodo = id => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          //supose to update
+          return {
+            ...todo,
+            isEdit: false
           };
         } else {
           return todo;
@@ -65,13 +97,25 @@ class TodoList extends Component {
 
   render() {
     let todos = [];
+    let all = "active";
+    let active = "active";
+    let complete = "active";
+    let numAll = this.state.todos.filter(todo => todo).length;
+    let numActive = this.state.todos.filter(todo => !todo.complete).length;
+    let numComplete = this.state.todos.filter(todo => todo.complete).length;
 
     if (this.state.todoToshow === "all") {
       todos = this.state.todos;
+      active = "";
+      complete = "";
     } else if (this.state.todoToshow === "active") {
       todos = this.state.todos.filter(todo => !todo.complete);
+      all = "";
+      complete = "";
     } else if (this.state.todoToshow === "complete") {
       todos = this.state.todos.filter(todo => todo.complete);
+      active = "";
+      all = "";
     }
 
     return (
@@ -82,15 +126,17 @@ class TodoList extends Component {
 
             <ul className="task-filters">
               <li onClick={() => this.updateTodoToshow("all")}>
-                <a className="active" href="#">
+                <a className={all} href="#">
                   View All
                 </a>
               </li>
               <li onClick={() => this.updateTodoToshow("active")}>
-                <a href="#">Active</a>
+                <a className={active} href="#">
+                  Active
+                </a>
               </li>
-              <li>
-                <a onClick={() => this.updateTodoToshow("complete")} href="#">
+              <li onClick={() => this.updateTodoToshow("complete")}>
+                <a className={complete} href="#">
                   Completed
                 </a>
               </li>
@@ -103,10 +149,14 @@ class TodoList extends Component {
                 onDelete={() => this.handleDeleteTodo(todo.id)}
                 editTodo={this.editTodo}
                 todo={todo}
+                updateTodo={this.updateTodo}
+                closeTodo={this.closeTodo}
               />
             ))}
-            <div>
-              left: {this.state.todos.filter(todo => !todo.complete).length}
+            <div className="divide">
+              <span>All: {(numAll * 100) / numAll}%</span>
+              <span>Active: {(numActive * 100) / numAll}% </span>
+              <span>Completed: {(numComplete * 100) / numAll}% </span>
             </div>
           </div>
         </div>

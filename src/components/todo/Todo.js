@@ -1,22 +1,54 @@
 import React, { Component } from "react";
 
 export default class Todo extends Component {
+  state = {
+    text: this.props.todo.text
+  };
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.text) {
+      this.props.updateTodo(this.state.text, this.props.todo.id);
+    }
+  };
+
+  handleClose = event => {
+    event.preventDefault();
+    this.setState({ text: this.props.todo.text });
+    this.props.closeTodo(this.props.todo.id);
+  };
+
   render() {
-    console.log(this.props.todo.isEdit);
     if (this.props.todo.isEdit === true) {
       return (
-        <div class="task-list">
-          <div class="task-item task-item--completed item-input" tabindex="0">
-            <form action="">
+        <div className="task-edit">
+          <div
+            className="task-item task-item--completed item-input"
+            tabIndex="0"
+          >
+            <form onSubmit={this.handleSubmit}>
               <input
-                class="task-form__input__edit"
+                name="text"
+                className="task-form__input__edit"
                 type="text"
-                placeholder="What need to be done?"
+                placeholder="To do"
+                value={this.state.text}
+                onChange={this.handleChange}
               />
             </form>
-            <div class="cell">
-              <button class="btn btn--icon task-item__button" type="button">
-                <i class="fas fa-times" />
+            <div className="cell">
+              <button
+                className="btn btn--icon task-item__button"
+                type="button"
+                onClick={this.handleClose}
+              >
+                <i className="fas fa-times" />
               </button>
             </div>
           </div>
@@ -47,7 +79,7 @@ export default class Todo extends Component {
                   <i className="fas fa-check" />
                 </button>
               </div>
-              <div className={"cell" + " task-name"}>
+              <div className="cell task-name">
                 <div
                   className="task-item__title"
                   style={{ paddingLeft: 20 }}
@@ -62,7 +94,7 @@ export default class Todo extends Component {
                 <button
                   className="btn btn--icon task-item__button"
                   type="button"
-                  // onClick={this.props.editTodo(this.todo.id)}
+                  onClick={() => this.props.editTodo(this.props.todo.id)}
                 >
                   <i className="fas fa-pencil-alt" />
                 </button>
