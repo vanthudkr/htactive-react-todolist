@@ -123,7 +123,6 @@ input {
 }
 
 .task-form__input__edit {
-  margin-right: 423px;
   padding-left: 20px;
   padding-top: 10px;
   outline: none;
@@ -208,9 +207,18 @@ input {
   justify-content: space-between;
 }
 
+.style-form {
+  width: 100%;
+}
+
+.padding-left-cell-edit {
+  padding-left: 40px;
+}
+
 .cell:first-child,
 .cell:last-child {
   display: flex;
+  flex-direction: row;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
   -ms-flex-align: center;

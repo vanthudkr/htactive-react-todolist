@@ -32,7 +32,7 @@ export default class Todo extends Component {
             className="task-item task-item--completed item-input"
             tabIndex="0"
           >
-            <form onSubmit={this.handleSubmit}>
+            <form className="style-form" onSubmit={this.handleSubmit}>
               <input
                 name="text"
                 className="task-form__input__edit"
@@ -42,7 +42,7 @@ export default class Todo extends Component {
                 onChange={this.handleChange}
               />
             </form>
-            <div className="cell">
+            <div className="cell padding-left-cell-edit">
               <button
                 className="btn btn--icon task-item__button"
                 type="button"

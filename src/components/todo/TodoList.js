@@ -154,7 +154,7 @@ class TodoList extends Component {
               />
             ))}
             <div className="divide">
-              <span>All: {numAll ? numAll : "Null"}</span>
+              <span>All: {numAll}</span>
               <span>
                 Active:
                 {numActive
