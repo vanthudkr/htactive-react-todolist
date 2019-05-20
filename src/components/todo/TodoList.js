@@ -154,9 +154,22 @@ class TodoList extends Component {
               />
             ))}
             <div className="divide">
-              <span>All: {(numAll * 100) / numAll}%</span>
-              <span>Active: {(numActive * 100) / numAll}% </span>
-              <span>Completed: {(numComplete * 100) / numAll}% </span>
+              <span>
+                All:{" "}
+                {numAll ? Math.round((numAll * 100) / numAll) + "%" : "Null"}
+              </span>
+              <span>
+                Active:{" "}
+                {numActive
+                  ? Math.round((numActive * 100) / numAll) + "%"
+                  : "Null"}
+              </span>
+              <span>
+                Completed:{" "}
+                {numComplete
+                  ? Math.round((numComplete * 100) / numAll) + "%"
+                  : "Null"}
+              </span>
             </div>
           </div>
         </div>
