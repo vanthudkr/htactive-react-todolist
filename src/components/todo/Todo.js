@@ -25,6 +25,7 @@ export default class Todo extends Component {
   };
 
   render() {
+    console.log("todo", this.props.todo);
     if (this.props.todo.isEdit === true) {
       return (
         <div className="task-edit">

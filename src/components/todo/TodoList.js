@@ -4,6 +4,8 @@ import Todo from "./Todo";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 
+const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
+
 class TodoList extends Component {
   state = {
     todos: [],
@@ -11,19 +13,30 @@ class TodoList extends Component {
   };
 
   addTodo = todo => {
-    this.setState({
-      todos: [todo, ...this.state.todos]
-    });
+    axios
+      .post(api, {
+        text: todo
+      })
+      .then(res => {
+        this.setState({
+          todos: [res.data, ...this.state.todos]
+        });
+      });
   };
 
-  componentDidMount() {
-    axios
-      .get(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList`)
-      .then(res => {
-        const todos = res.data;
-        this.setState({ todos });
-      });
+  async componentDidMount() {
+    const res = await axios.get(api);
+    const todos = res.data;
+    todos.sort((a, b) => (+b.id > +a.id ? 1 : -1));
+    this.setState({
+      todos
+    });
   }
+
+  sortDesc = () => {
+    const { id } = this.state;
+    id.sortDesc();
+  };
 
   updateTodo = (text, id) => {
     const todo = {
@@ -31,12 +44,10 @@ class TodoList extends Component {
       isEdit: false
     };
 
-    axios
-      .put(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${id}`, todo)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      });
+    axios.put(`${api}/${id}`, todo).then(res => {
+      console.log(res);
+      console.log(res.data);
+    });
     this.setState({
       todos: this.state.todos.map(todo => {
         if (todo.id === id) {
@@ -54,15 +65,15 @@ class TodoList extends Component {
     });
   };
 
-  toggleComplete = todo => {
+  toggleComplete = (id, complete) => {
+    console.log(id);
     axios
-      .put(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${todo.id}`, {
-        complete: !todo.complete
+      .put(`${api}/${id}`, {
+        complete: !complete
       })
       .then(res => {
         const data = res.data;
-        console.log(res);
-        console.log(data);
+
         this.setState({
           todos: this.state.todos.map(todo => {
             if (todo.id === data.id) {
@@ -99,16 +110,14 @@ class TodoList extends Component {
   };
 
   handleDeleteTodo = async todo => {
-    await axios
-      .delete(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${todo.id}`)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        const data = res.data;
-        this.setState({
-          todos: this.state.todos.filter(todo => todo.id !== data.id)
-        });
+    await axios.delete(`${api}/${todo.id}`).then(res => {
+      console.log(res);
+      console.log(res.data);
+      const data = res.data;
+      this.setState({
+        todos: this.state.todos.filter(todo => todo.id !== data.id)
       });
+    });
   };
 
   editTodo = id => {
@@ -149,7 +158,7 @@ class TodoList extends Component {
       active = "";
       all = "";
     }
-
+    console.log("toot", this.state.todos);
     return (
       <>
         <div className="content-container">
@@ -174,10 +183,12 @@ class TodoList extends Component {
               </li>
             </ul>
 
-            {todos.map(todo => (
+            {this.state.todos.map(todo => (
               <Todo
                 key={todo.id}
-                toggleComplete={() => this.toggleComplete(todo)}
+                toggleComplete={() =>
+                  this.toggleComplete(todo.id, todo.complete)
+                }
                 onDelete={() => this.handleDeleteTodo(todo)}
                 editTodo={this.editTodo}
                 todo={todo}
