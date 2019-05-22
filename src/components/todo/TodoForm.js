@@ -1,5 +1,6 @@
 import React from "react";
 import shortid from "shortid";
+import axios from "axios";
 
 export default class TodoForm extends React.Component {
   state = {
@@ -23,6 +24,19 @@ export default class TodoForm extends React.Component {
     this.setState({
       text: ""
     });
+
+    const todo = {
+      id: shortid.generate(),
+      text: this.state.text,
+      isEdit: false
+    };
+
+    axios
+      .post(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList`, todo)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
   };
 
   render() {

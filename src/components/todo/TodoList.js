@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
+import axios from "axios";
+import { ClipLoader } from "react-spinners";
 
 class TodoList extends Component {
   state = {
-    todos: [
-      { id: 1, text: "React", isEdit: false },
-      { id: 2, text: "React basic", isEdit: false }
-    ],
+    todos: [],
     todoToshow: "all"
   };
 
@@ -17,7 +16,27 @@ class TodoList extends Component {
     });
   };
 
+  componentDidMount() {
+    axios
+      .get(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList`)
+      .then(res => {
+        const todos = res.data;
+        this.setState({ todos });
+      });
+  }
+
   updateTodo = (text, id) => {
+    const todo = {
+      text: text,
+      isEdit: false
+    };
+
+    axios
+      .put(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${id}`, todo)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
     this.setState({
       todos: this.state.todos.map(todo => {
         if (todo.id === id) {
@@ -35,20 +54,26 @@ class TodoList extends Component {
     });
   };
 
-  toggleComplete = id => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          //supose to update
-          return {
-            ...todo,
-            complete: !todo.complete
-          };
-        } else {
-          return todo;
-        }
+  toggleComplete = todo => {
+    axios
+      .put(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${todo.id}`, {
+        complete: !todo.complete
       })
-    });
+      .then(res => {
+        const data = res.data;
+        console.log(res);
+        console.log(data);
+        this.setState({
+          todos: this.state.todos.map(todo => {
+            if (todo.id === data.id) {
+              //supose to update
+
+              return data;
+            }
+            return todo;
+          })
+        });
+      });
   };
 
   closeTodo = id => {
@@ -73,10 +98,17 @@ class TodoList extends Component {
     });
   };
 
-  handleDeleteTodo = id => {
-    this.setState({
-      todos: this.state.todos.filter(todo => todo.id !== id)
-    });
+  handleDeleteTodo = async todo => {
+    await axios
+      .delete(`http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList/${todo.id}`)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        const data = res.data;
+        this.setState({
+          todos: this.state.todos.filter(todo => todo.id !== data.id)
+        });
+      });
   };
 
   editTodo = id => {
@@ -145,8 +177,8 @@ class TodoList extends Component {
             {todos.map(todo => (
               <Todo
                 key={todo.id}
-                toggleComplete={() => this.toggleComplete(todo.id)}
-                onDelete={() => this.handleDeleteTodo(todo.id)}
+                toggleComplete={() => this.toggleComplete(todo)}
+                onDelete={() => this.handleDeleteTodo(todo)}
                 editTodo={this.editTodo}
                 todo={todo}
                 updateTodo={this.updateTodo}
