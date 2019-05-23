@@ -70,8 +70,6 @@ class TodoList extends Component {
         this.setState({
           todos: this.state.todos.map(todo => {
             if (todo.id === data.id) {
-              //supose to update
-
               return data;
             }
             return todo;
@@ -84,7 +82,6 @@ class TodoList extends Component {
     this.setState({
       todos: this.state.todos.map(todo => {
         if (todo.id === id) {
-          //supose to update
           return {
             ...todo,
             isEdit: false
@@ -130,7 +127,6 @@ class TodoList extends Component {
   };
 
   render() {
-    let todos = [];
     let all = "active";
     let active = "active";
     let complete = "active";
@@ -138,8 +134,10 @@ class TodoList extends Component {
     let numActive = this.state.todos.filter(todo => !todo.complete).length;
     let numComplete = this.state.todos.filter(todo => todo.complete).length;
 
+    let todos = [];
+
     if (this.state.todoToshow === "all") {
-      todos = this.state.todos.filter(todo => !todo.complete);
+      todos = this.state.todos;
       active = "";
       complete = "";
     } else if (this.state.todoToshow === "active") {
@@ -151,7 +149,6 @@ class TodoList extends Component {
       active = "";
       all = "";
     }
-    console.log("toot", this.state.todos);
     return (
       <>
         <div className="content-container">
@@ -160,23 +157,23 @@ class TodoList extends Component {
 
             <ul className="task-filters">
               <li onClick={() => this.updateTodoToshow("all")}>
-                <a href="#" className={all}>
+                <a className={all} href="#home">
                   View All
                 </a>
               </li>
               <li onClick={() => this.updateTodoToshow("active")}>
-                <a href="#" className={active}>
+                <a className={active} href="#home">
                   Active
                 </a>
               </li>
               <li onClick={() => this.updateTodoToshow("complete")}>
-                <a href="#" className={complete}>
+                <a className={complete} href="#home">
                   Completed
                 </a>
               </li>
             </ul>
 
-            {this.state.todos.map(todo => (
+            {todos.map(todo => (
               <Todo
                 key={todo.id}
                 toggleComplete={() =>
