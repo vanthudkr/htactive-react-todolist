@@ -1,7 +1,9 @@
 import React from "react";
 import shortid from "shortid";
+import PropTypes from "prop-types";
+import Todo from "./Todo";
 
-export default class TodoForm extends React.Component {
+class TodoForm extends React.Component {
   state = {
     text: ""
   };
@@ -31,3 +33,8 @@ export default class TodoForm extends React.Component {
     );
   }
 }
+
+export default TodoForm;
+Todo.PropTypes = {
+  text: PropTypes.number
+};
