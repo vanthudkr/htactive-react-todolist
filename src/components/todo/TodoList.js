@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import axios from "axios";
+import ErrorBoundary from "../ErrorBoundary";
 
 const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
 
@@ -33,6 +34,7 @@ class TodoList extends Component {
   }
 
   updateTodo = (text, id) => {
+    console.log("object");
     const todo = {
       text: text,
       isEdit: false
@@ -99,8 +101,8 @@ class TodoList extends Component {
     });
   };
 
-  handleDeleteTodo = async todo => {
-    await axios.delete(`${api}/${todo.id}`).then(res => {
+  handleDeleteTodo = async id => {
+    await axios.delete(`${api}/${id}`).then(res => {
       console.log(res);
       console.log(res.data);
       const data = res.data;
@@ -174,17 +176,18 @@ class TodoList extends Component {
             </ul>
 
             {todos.map(todo => (
-              <Todo
-                key={todo.id}
-                toggleComplete={() =>
-                  this.toggleComplete(todo.id, todo.complete)
-                }
-                onDelete={() => this.handleDeleteTodo(todo)}
-                editTodo={this.editTodo}
-                todo={todo}
-                updateTodo={this.updateTodo}
-                closeTodo={this.closeTodo}
-              />
+              <ErrorBoundary key={todo.id}>
+                <Todo
+                  toggleComplete={() =>
+                    this.toggleComplete(todo.id, todo.complete)
+                  }
+                  onDelete={() => this.handleDeleteTodo(todo.id)}
+                  editTodo={() => this.editTodo(todo.id)}
+                  todo={todo}
+                  updateTodo={this.updateTodo}
+                  closeTodo={() => this.closeTodo}
+                />
+              </ErrorBoundary>
             ))}
             <div className="divide">
               <span>All: {numAll}</span>

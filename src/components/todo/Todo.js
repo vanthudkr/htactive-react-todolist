@@ -119,7 +119,7 @@ export default class Todo extends Component {
                 <button
                   className="btn btn--icon task-item__button"
                   type="button"
-                  onClick={() => this.props.editTodo(this.props.todo.id)}
+                  onClick={this.props.editTodo}
                 >
                   <i className="fas fa-pencil-alt" />
                 </button>

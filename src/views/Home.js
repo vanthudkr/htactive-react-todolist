@@ -4,7 +4,11 @@ import "./Home.css";
 
 class Home extends Component {
   render() {
-    return <TodoList />;
+    return (
+      <>
+        <TodoList />
+      </>
+    );
   }
 }
 
