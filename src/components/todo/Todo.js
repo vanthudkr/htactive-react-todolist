@@ -1,4 +1,29 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+const propTypes = {
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    isEdit: PropTypes.boolean,
+    complete: PropTypes.boolean
+  }).isRequired, // product nhan vao phai la array .isRequied la yeu cau phai co
+  onDelete: PropTypes.func,
+  onClick: PropTypes.func,
+  editTodo: PropTypes.func,
+  toggleComplete: PropTypes.func,
+  updateTodo: PropTypes.func,
+  addTodo: PropTypes.func
+};
+
+const defaultProps = {
+  onDelete: () => {},
+  editTodo: () => {},
+  toggleComplete: () => {},
+  updateTodo: () => {},
+  addTodo: () => {},
+  onClick: () => {}
+};
 
 export default class Todo extends Component {
   state = {
@@ -25,7 +50,6 @@ export default class Todo extends Component {
   };
 
   render() {
-    console.log("todo", this.props.todo);
     if (this.props.todo.isEdit === true) {
       return (
         <div className="task-edit">
@@ -114,3 +138,6 @@ export default class Todo extends Component {
     }
   }
 }
+
+Todo.propTypes = propTypes;
+Todo.defaultProps = defaultProps;

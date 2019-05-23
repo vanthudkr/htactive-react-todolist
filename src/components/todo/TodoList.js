@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import axios from "axios";
-import { ClipLoader } from "react-spinners";
 
 const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
 
@@ -33,11 +32,6 @@ class TodoList extends Component {
     });
   }
 
-  sortDesc = () => {
-    const { id } = this.state;
-    id.sortDesc();
-  };
-
   updateTodo = (text, id) => {
     const todo = {
       text: text,
@@ -66,7 +60,6 @@ class TodoList extends Component {
   };
 
   toggleComplete = (id, complete) => {
-    console.log(id);
     axios
       .put(`${api}/${id}`, {
         complete: !complete
@@ -146,7 +139,7 @@ class TodoList extends Component {
     let numComplete = this.state.todos.filter(todo => todo.complete).length;
 
     if (this.state.todoToshow === "all") {
-      todos = this.state.todos;
+      todos = this.state.todos.filter(todo => !todo.complete);
       active = "";
       complete = "";
     } else if (this.state.todoToshow === "active") {
@@ -167,17 +160,17 @@ class TodoList extends Component {
 
             <ul className="task-filters">
               <li onClick={() => this.updateTodoToshow("all")}>
-                <a className={all} href="#">
+                <a href="#" className={all}>
                   View All
                 </a>
               </li>
               <li onClick={() => this.updateTodoToshow("active")}>
-                <a className={active} href="#">
+                <a href="#" className={active}>
                   Active
                 </a>
               </li>
               <li onClick={() => this.updateTodoToshow("complete")}>
-                <a className={complete} href="#">
+                <a href="#" className={complete}>
                   Completed
                 </a>
               </li>
