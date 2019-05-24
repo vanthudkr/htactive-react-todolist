@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 import ErrorBoundary from "../ErrorBoundary";
 
 const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
@@ -25,11 +26,12 @@ class TodoList extends Component {
   };
 
   async componentDidMount() {
+    this.setState({ loading: true })
     const res = await axios.get(api);
     const todos = res.data;
     todos.sort((a, b) => (+b.id > +a.id ? 1 : -1));
     this.setState({
-      todos
+      todos, loading: false
     });
   }
 
@@ -152,61 +154,60 @@ class TodoList extends Component {
       all = "";
     }
     return (
-      <>
-        <div className="content-container">
-          <div className="content">
-            <TodoForm onSubmit={this.addTodo} />
+      <div className="content-container">
+        <div className="content">
+          {this.state.loading && <ClipLoader />}
+          <TodoForm onSubmit={this.addTodo} />
 
-            <ul className="task-filters">
-              <li onClick={() => this.updateTodoToshow("all")}>
-                <a className={all} href="#home">
-                  View All
+          <ul className="task-filters">
+            <li onClick={() => this.updateTodoToshow("all")}>
+              <a className={all} href="#home">
+                View All
                 </a>
-              </li>
-              <li onClick={() => this.updateTodoToshow("active")}>
-                <a className={active} href="#home">
-                  Active
+            </li>
+            <li onClick={() => this.updateTodoToshow("active")}>
+              <a className={active} href="#home">
+                Active
                 </a>
-              </li>
-              <li onClick={() => this.updateTodoToshow("complete")}>
-                <a className={complete} href="#home">
-                  Completed
+            </li>
+            <li onClick={() => this.updateTodoToshow("complete")}>
+              <a className={complete} href="#home">
+                Completed
                 </a>
-              </li>
-            </ul>
+            </li>
+          </ul>
 
-            {todos.map(todo => (
-              <ErrorBoundary key={todo.id}>
-                <Todo
-                  toggleComplete={() =>
-                    this.toggleComplete(todo.id, todo.complete)
-                  }
-                  onDelete={() => this.handleDeleteTodo(todo.id)}
-                  editTodo={() => this.editTodo(todo.id)}
-                  todo={todo}
-                  updateTodo={this.updateTodo}
-                  closeTodo={() => this.closeTodo}
-                />
-              </ErrorBoundary>
-            ))}
-            <div className="divide">
-              <span>All: {numAll}</span>
-              <span>
-                Active:
+          {todos.map(todo => (
+            <ErrorBoundary key={todo.id}>
+              <Todo
+                toggleComplete={() =>
+                  this.toggleComplete(todo.id, todo.complete)
+                }
+                onDelete={() => this.handleDeleteTodo(todo.id)}
+                editTodo={() => this.editTodo(todo.id)}
+                todo={todo}
+                updateTodo={this.updateTodo}
+                closeTodo={() => this.closeTodo(todo.id)}
+              />
+            </ErrorBoundary>
+          ))}
+          <div className="divide">
+            <span>All: {numAll}</span>
+            <span>
+              Active:
                 {numActive
-                  ? Math.round((numActive * 100) / numAll) + "%"
-                  : "0%"}
-              </span>
-              <span>
-                Completed:
+                ? Math.round((numActive * 100) / numAll) + "%"
+                : "0%"}
+            </span>
+            <span>
+              Completed:
                 {numComplete
-                  ? Math.round((numComplete * 100) / numAll) + "%"
-                  : "0%"}
-              </span>
-            </div>
+                ? Math.round((numComplete * 100) / numAll) + "%"
+                : "0%"}
+            </span>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

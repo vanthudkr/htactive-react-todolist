@@ -17,17 +17,17 @@ const propTypes = {
 };
 
 const defaultProps = {
-  onDelete: () => {},
-  editTodo: () => {},
-  toggleComplete: () => {},
-  updateTodo: () => {},
-  addTodo: () => {},
-  onClick: () => {}
+  onDelete: () => { },
+  editTodo: () => { },
+  toggleComplete: () => { },
+  updateTodo: () => { },
+  addTodo: () => { },
+  onClick: () => { }
 };
 
 export default class Todo extends Component {
   state = {
-    text: this.props.todo.text
+    text: this.props.todo.text,
   };
 
   handleChange = event => {
@@ -126,7 +126,7 @@ export default class Todo extends Component {
                 <button
                   className="btn btn--icon task-item__button"
                   type="button"
-                  onClick={this.props.onDelete}
+                  onClick={() => window.confirm("sss") && this.props.onDelete}
                 >
                   <i className="fas fa-trash" />
                 </button>

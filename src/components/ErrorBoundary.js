@@ -1,13 +1,41 @@
 import React from "react";
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 export default class ErrorBoundary extends React.Component {
-  state = {
-    error: null,
-    errorInfo: null
-  };
+  constructor() {
+    super();
+    this.state = {
+      error: null,
+      errorInfo: null,
+      modalIsOpen: false
+    };
 
-  static getDerivedStateFromError(errorInfo) {
-    return { errorInfo: true };
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
   }
 
   componentDidCatch(error, errorInfo) {
@@ -21,13 +49,24 @@ export default class ErrorBoundary extends React.Component {
     if (this.state.errorInfo) {
       return (
         <div>
-          <h2>Something went wrong.</h2>
-          <details style={{ whiteSpace: "pre-wrap" }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
+          <Modal
+            isOpen={this.openModal}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div>
+              <h2>Something went wrong.</h2>
+              <details style={{ whiteSpace: "pre-wrap" }}>
+                {this.state.error && this.state.error.toString()}
+                <br />
+                {this.state.errorInfo.componentStack}
+              </details>
+            </div>
+          </Modal>
         </div>
+
       );
     }
     return this.props.children;
