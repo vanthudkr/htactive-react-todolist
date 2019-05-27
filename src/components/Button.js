@@ -5,13 +5,16 @@ class Button extends Component {
   render() {
     return (
       <ColorContext.Consumer>
-        <button
-          className="btn signin-button"
-          type="button"
-          onClick={() => this.props.onLogin("home")}
-        >
-          {this.props.text}
-        </button>
+        {() => (
+          <button
+            style={{ backgroundColor: this.props.colors }}
+            className="btn signin-button"
+            type="button"
+            onClick={() => this.props.onLogin("home")}
+          >
+            {this.props.text}
+          </button>
+        )}
       </ColorContext.Consumer>
     );
   }
