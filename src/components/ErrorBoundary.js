@@ -3,12 +3,12 @@ import Modal from "react-modal";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
   }
 };
 
@@ -18,7 +18,7 @@ export default class ErrorBoundary extends React.Component {
     this.state = {
       error: null,
       errorInfo: null,
-      modalIsOpen: false
+      modalIsOpen: true
     };
 
     this.openModal = this.openModal.bind(this);
@@ -51,11 +51,10 @@ export default class ErrorBoundary extends React.Component {
         <div>
           <Modal
             isOpen={this.openModal}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
             style={customStyles}
             contentLabel="Example Modal"
           >
+            <button onClick={this.closeModal}>x</button>
             <div>
               <h2>Something went wrong.</h2>
               <details style={{ whiteSpace: "pre-wrap" }}>
@@ -66,7 +65,6 @@ export default class ErrorBoundary extends React.Component {
             </div>
           </Modal>
         </div>
-
       );
     }
     return this.props.children;

@@ -13,6 +13,14 @@ body {
   margin: 0 auto;
 }
 
+.color-button {
+  background-color: red !important;
+}
+
+.margin-top-button {
+  margin-top: 30px;
+}
+
 .sign-in__heading {
   margin-bottom: 36px;
   font-size: 30px;

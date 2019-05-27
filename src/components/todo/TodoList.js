@@ -26,12 +26,13 @@ class TodoList extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     const res = await axios.get(api);
     const todos = res.data;
     todos.sort((a, b) => (+b.id > +a.id ? 1 : -1));
     this.setState({
-      todos, loading: false
+      todos,
+      loading: false
     });
   }
 
@@ -163,17 +164,17 @@ class TodoList extends Component {
             <li onClick={() => this.updateTodoToshow("all")}>
               <a className={all} href="#home">
                 View All
-                </a>
+              </a>
             </li>
             <li onClick={() => this.updateTodoToshow("active")}>
               <a className={active} href="#home">
                 Active
-                </a>
+              </a>
             </li>
             <li onClick={() => this.updateTodoToshow("complete")}>
               <a className={complete} href="#home">
                 Completed
-                </a>
+              </a>
             </li>
           </ul>
 
@@ -195,13 +196,11 @@ class TodoList extends Component {
             <span>All: {numAll}</span>
             <span>
               Active:
-                {numActive
-                ? Math.round((numActive * 100) / numAll) + "%"
-                : "0%"}
+              {numActive ? Math.round((numActive * 100) / numAll) + "%" : "0%"}
             </span>
             <span>
               Completed:
-                {numComplete
+              {numComplete
                 ? Math.round((numComplete * 100) / numAll) + "%"
                 : "0%"}
             </span>
