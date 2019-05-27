@@ -1,21 +1,10 @@
 import React, { Component } from "react";
+import ColorContext from "./ColorContext";
 
 class Button extends Component {
   render() {
-    console.log(this.props.color);
-    console.log(this.props.text);
-    if (this.props.changeColor === true) {
-      return (
-        <button
-          className={"btn signin-button" + this.props.color}
-          type="button"
-          onClick={() => this.props.onLogin("home")}
-        >
-          {this.props.text}
-        </button>
-      );
-    } else {
-      return (
+    return (
+      <ColorContext.Consumer>
         <button
           className="btn signin-button"
           type="button"
@@ -23,8 +12,8 @@ class Button extends Component {
         >
           {this.props.text}
         </button>
-      );
-    }
+      </ColorContext.Consumer>
+    );
   }
 }
 export default Button;

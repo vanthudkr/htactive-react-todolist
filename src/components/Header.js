@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ButtonChangeColor from "./ButtonChangeColor";
 
 class Header extends Component {
   render() {
@@ -13,6 +14,8 @@ class Header extends Component {
               </svg>
             </a>
           </li>
+          <ButtonChangeColor />
+          <li />
         </ul>
       </div>
     );

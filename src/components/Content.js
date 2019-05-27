@@ -14,12 +14,6 @@ class Content extends Component {
           {this.state.socials.map((s, key) => (
             <Button key={key} text={s} onLogin={this.props.onLogin} />
           ))}
-          <button
-            className="btn signin-button margin-top-button"
-            type="buttuon"
-          >
-            Change color
-          </button>
         </div>
       </div>
     );
