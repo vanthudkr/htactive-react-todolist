@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import ButtonChangeColor from "./ButtonChangeColor";
-
+import ColorContext from "../contexts/ColorContext";
 class Header extends Component {
   render() {
     return (
@@ -14,7 +13,13 @@ class Header extends Component {
               </svg>
             </a>
           </li>
-          <ButtonChangeColor />
+          <ColorContext.Consumer>
+            {({ changeColor }) => (
+              <button onClick={changeColor}>
+                <i className="fas fa-palette" />
+              </button>
+            )}
+          </ColorContext.Consumer>
           <li />
         </ul>
       </div>

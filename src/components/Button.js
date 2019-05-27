@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import ColorContext from "./ColorContext";
+import ColorContext from "../contexts/ColorContext";
 
 class Button extends Component {
   render() {
     return (
       <ColorContext.Consumer>
-        {() => (
+        {({ color }) => (
           <button
-            style={{ backgroundColor: this.props.colors }}
+            style={{ backgroundColor: `${color}` }}
             className="btn signin-button"
             type="button"
             onClick={() => this.props.onLogin("home")}
