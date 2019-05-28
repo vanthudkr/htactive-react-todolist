@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import ColorContext from "../contexts/ColorContext";
 
 const ColorProvider = props => {
-  const [color, setColor] = useState([34, 34, 34]);
+  const [color, setColor] = useState(true);
 
-  const formatColor = ary => {
-    return "rgb(" + ary.join(", ") + ")";
+  const formatColor = color => {
+    let colorCurrent = color === true ? [34, 34, 34] : [0, 0, 0];
+
+    return "rgb(" + colorCurrent.join(", ") + ")";
   };
 
   const chooseColor = () => {
-    for (var i = 0, random = []; i < 3; i++) {
-      random.push(Math.floor(Math.random() * 256));
-    }
-    return random;
+    return !color;
   };
 
   const changeColor = () => {

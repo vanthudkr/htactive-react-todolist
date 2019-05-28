@@ -18,10 +18,12 @@ class App extends React.Component {
     if (this.state.page !== "") {
       return (
         <>
-          <div className="container">
-            <Header />
-          </div>
-          <Home />
+          <ColorProvider>
+            <div className="container">
+              <Header />
+            </div>
+            <Home />
+          </ColorProvider>
         </>
       );
     } else {

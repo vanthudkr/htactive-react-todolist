@@ -1,214 +1,86 @@
-import React, { Component } from "react";
+import React from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
-import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import ErrorBoundary from "../ErrorBoundary";
 
-const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
+const TodoList = props => {
+  let all = "active";
+  let active = "active";
+  let complete = "active";
+  let numAll = props.todos.filter(todo => todo).length;
+  let numActive = props.todos.filter(todo => !todo.complete).length;
+  let numComplete = props.todos.filter(todo => todo.complete).length;
 
-class TodoList extends Component {
-  state = {
-    todos: [],
-    todoToshow: "all"
-  };
+  let todos = [];
 
-  addTodo = todo => {
-    axios
-      .post(api, {
-        text: todo
-      })
-      .then(res => {
-        this.setState({
-          todos: [res.data, ...this.state.todos]
-        });
-      });
-  };
-
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const res = await axios.get(api);
-    const todos = res.data;
-    todos.sort((a, b) => (+b.id > +a.id ? 1 : -1));
-    this.setState({
-      todos,
-      loading: false
-    });
+  if (props.todoToShow === "all") {
+    todos = props.todos;
+    active = "";
+    complete = "";
+  } else if (props.todoToShow === "active") {
+    todos = props.todos.filter(todo => !todo.complete);
+    all = "";
+    complete = "";
+  } else if (props.todoToShow === "complete") {
+    todos = props.todos.filter(todo => todo.complete);
+    active = "";
+    all = "";
   }
+  return (
+    <div className="content-container">
+      <div className="content">
+        {props.loading && <ClipLoader />}
+        <TodoForm onSubmit={props.addTodo} />
 
-  updateTodo = (text, id) => {
-    console.log("object");
-    const todo = {
-      text: text,
-      isEdit: false
-    };
+        <ul className="task-filters">
+          <li onClick={() => props.updateTodoToShow("all")}>
+            <a className={all} href="#home">
+              View All
+            </a>
+          </li>
+          <li onClick={() => props.updateTodoToShow("active")}>
+            <a className={active} href="#home">
+              Active
+            </a>
+          </li>
+          <li onClick={() => props.updateTodoToShow("complete")}>
+            <a className={complete} href="#home">
+              Completed
+            </a>
+          </li>
+        </ul>
 
-    axios.put(`${api}/${id}`, todo).then(res => {
-      console.log(res);
-      console.log(res.data);
-    });
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          //supose to update
-          return {
-            ...todo,
-            text: text,
-            isEdit: false,
-            complete: false
-          };
-        } else {
-          return todo;
-        }
-      })
-    });
-  };
-
-  toggleComplete = (id, complete) => {
-    axios
-      .put(`${api}/${id}`, {
-        complete: !complete
-      })
-      .then(res => {
-        const data = res.data;
-
-        this.setState({
-          todos: this.state.todos.map(todo => {
-            if (todo.id === data.id) {
-              return data;
-            }
-            return todo;
-          })
-        });
-      });
-  };
-
-  closeTodo = id => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            isEdit: false
-          };
-        } else {
-          return todo;
-        }
-      })
-    });
-  };
-
-  updateTodoToshow = s => {
-    this.setState({
-      todoToshow: s
-    });
-  };
-
-  handleDeleteTodo = async id => {
-    await axios.delete(`${api}/${id}`).then(res => {
-      console.log(res);
-      console.log(res.data);
-      const data = res.data;
-      this.setState({
-        todos: this.state.todos.filter(todo => todo.id !== data.id)
-      });
-    });
-  };
-
-  editTodo = id => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          //supose to update
-          return {
-            ...todo,
-            isEdit: true
-          };
-        } else {
-          return todo;
-        }
-      })
-    });
-  };
-
-  render() {
-    let all = "active";
-    let active = "active";
-    let complete = "active";
-    let numAll = this.state.todos.filter(todo => todo).length;
-    let numActive = this.state.todos.filter(todo => !todo.complete).length;
-    let numComplete = this.state.todos.filter(todo => todo.complete).length;
-
-    let todos = [];
-
-    if (this.state.todoToshow === "all") {
-      todos = this.state.todos;
-      active = "";
-      complete = "";
-    } else if (this.state.todoToshow === "active") {
-      todos = this.state.todos.filter(todo => !todo.complete);
-      all = "";
-      complete = "";
-    } else if (this.state.todoToshow === "complete") {
-      todos = this.state.todos.filter(todo => todo.complete);
-      active = "";
-      all = "";
-    }
-    return (
-      <div className="content-container">
-        <div className="content">
-          {this.state.loading && <ClipLoader />}
-          <TodoForm onSubmit={this.addTodo} />
-
-          <ul className="task-filters">
-            <li onClick={() => this.updateTodoToshow("all")}>
-              <a className={all} href="#home">
-                View All
-              </a>
-            </li>
-            <li onClick={() => this.updateTodoToshow("active")}>
-              <a className={active} href="#home">
-                Active
-              </a>
-            </li>
-            <li onClick={() => this.updateTodoToshow("complete")}>
-              <a className={complete} href="#home">
-                Completed
-              </a>
-            </li>
-          </ul>
-
-          {todos.map(todo => (
-            <ErrorBoundary key={todo.id}>
-              <Todo
-                toggleComplete={() =>
-                  this.toggleComplete(todo.id, todo.complete)
-                }
-                onDelete={() => this.handleDeleteTodo(todo.id)}
-                editTodo={() => this.editTodo(todo.id)}
-                todo={todo}
-                updateTodo={this.updateTodo}
-                closeTodo={() => this.closeTodo(todo.id)}
-              />
-            </ErrorBoundary>
-          ))}
-          <div className="divide">
-            <span>All: {numAll}</span>
-            <span>
-              Active:
-              {numActive ? Math.round((numActive * 100) / numAll) + "%" : "0%"}
-            </span>
-            <span>
-              Completed:
-              {numComplete
-                ? Math.round((numComplete * 100) / numAll) + "%"
-                : "0%"}
-            </span>
-          </div>
+        {todos.map(todo => (
+          <ErrorBoundary key={todo.id}>
+            <Todo
+              toggleComplete={() =>
+                props.toggleComplete(todo.id, todo.complete)
+              }
+              onDelete={() => props.handleDeleteTodo(todo.id)}
+              editTodo={() => props.editTodo(todo.id)}
+              todo={todo}
+              updateTodo={props.updateTodo}
+              closeTodo={() => props.closeTodo(todo.id)}
+            />
+          </ErrorBoundary>
+        ))}
+        <div className="divide">
+          <span>All: {numAll}</span>
+          <span>
+            Active:
+            {numActive ? Math.round((numActive * 100) / numAll) + "%" : "0%"}
+          </span>
+          <span>
+            Completed:
+            {numComplete
+              ? Math.round((numComplete * 100) / numAll) + "%"
+              : "0%"}
+          </span>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default TodoList;

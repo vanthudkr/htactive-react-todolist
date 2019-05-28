@@ -50,6 +50,7 @@ export default class Todo extends Component {
   };
 
   render() {
+    console.log("vao", this.props);
     if (this.props.todo.isEdit === true) {
       return (
         <div className="task-edit">
@@ -81,61 +82,59 @@ export default class Todo extends Component {
       );
     } else {
       return (
-        <>
-          <div className="task-list">
-            <div
-              className={
-                "task-item " +
-                (this.props.todo.complete ? "task-item--completed" : "")
-              }
-              onClick={this.props.toggleComplete}
-              tabIndex="0"
-            >
-              <div className="cell">
-                <button
-                  className={
-                    "btn btn--icon " +
-                    (this.props.todo.complete
-                      ? "task-item__button-completed"
-                      : "task-item__button")
-                  }
-                  type="button"
-                >
-                  <i className="fas fa-check" />
-                </button>
-              </div>
-              <div className="cell task-name">
-                <div
-                  className="task-item__title"
-                  style={{ paddingLeft: 20 }}
-                  tabIndex="0"
-                >
-                  {this.props.todo.text}
-                </div>
-              </div>
+        <div className="task-list">
+          <div
+            className={
+              "task-item " +
+              (this.props.todo.complete ? "task-item--completed" : "")
+            }
+            onClick={this.props.toggleComplete}
+            tabIndex="0"
+          >
+            <div className="cell">
+              <button
+                className={
+                  "btn btn--icon " +
+                  (this.props.todo.complete
+                    ? "task-item__button-completed"
+                    : "task-item__button")
+                }
+                type="button"
+              >
+                <i className="fas fa-check" />
+              </button>
             </div>
-            <div className="task-item">
-              <div className="cell padding-cell">
-                <button
-                  className="btn btn--icon task-item__button"
-                  type="button"
-                  onClick={this.props.editTodo}
-                >
-                  <i className="fas fa-pencil-alt" />
-                </button>
-                <button
-                  className="btn btn--icon task-item__button"
-                  type="button"
-                  onClick={() =>
-                    window.confirm("Are you sure?") && this.props.onDelete()
-                  }
-                >
-                  <i className="fas fa-trash" />
-                </button>
+            <div className="cell task-name">
+              <div
+                className="task-item__title"
+                style={{ paddingLeft: 20 }}
+                tabIndex="0"
+              >
+                {this.props.todo.text}
               </div>
             </div>
           </div>
-        </>
+          <div className="task-item">
+            <div className="cell padding-cell">
+              <button
+                className="btn btn--icon task-item__button"
+                type="button"
+                onClick={this.props.editTodo}
+              >
+                <i className="fas fa-pencil-alt" />
+              </button>
+              <button
+                className="btn btn--icon task-item__button"
+                type="button"
+                onClick={() =>
+                  window.confirm("Are you sure?") && this.props.onDelete()
+                }
+              >
+                <i className="fas fa-trash" />
+              </button>
+            </div>
+          </div>
+        </div>
       );
     }
   }
