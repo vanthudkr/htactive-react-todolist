@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/vanthudkr/htactive-react-todolist.git/static/css/main.07a820fa.chunk.css",
-    "main.js": "/vanthudkr/htactive-react-todolist.git/static/js/main.61d5bda7.chunk.js",
-    "main.js.map": "/vanthudkr/htactive-react-todolist.git/static/js/main.61d5bda7.chunk.js.map",
-    "runtime~main.js": "/vanthudkr/htactive-react-todolist.git/static/js/runtime~main.6980de9e.js",
-    "runtime~main.js.map": "/vanthudkr/htactive-react-todolist.git/static/js/runtime~main.6980de9e.js.map",
-    "static/js/2.aedcd12f.chunk.js": "/vanthudkr/htactive-react-todolist.git/static/js/2.aedcd12f.chunk.js",
-    "static/js/2.aedcd12f.chunk.js.map": "/vanthudkr/htactive-react-todolist.git/static/js/2.aedcd12f.chunk.js.map",
-    "index.html": "/vanthudkr/htactive-react-todolist.git/index.html",
-    "precache-manifest.8ee5409e33de87243f10381372a9192a.js": "/vanthudkr/htactive-react-todolist.git/precache-manifest.8ee5409e33de87243f10381372a9192a.js",
-    "service-worker.js": "/vanthudkr/htactive-react-todolist.git/service-worker.js",
-    "static/css/main.07a820fa.chunk.css.map": "/vanthudkr/htactive-react-todolist.git/static/css/main.07a820fa.chunk.css.map"
+    "main.css": "/vanthudkr/htactive-react-todolist/static/css/main.07a820fa.chunk.css",
+    "main.js": "/vanthudkr/htactive-react-todolist/static/js/main.4cf8ffda.chunk.js",
+    "main.js.map": "/vanthudkr/htactive-react-todolist/static/js/main.4cf8ffda.chunk.js.map",
+    "runtime~main.js": "/vanthudkr/htactive-react-todolist/static/js/runtime~main.3bc28527.js",
+    "runtime~main.js.map": "/vanthudkr/htactive-react-todolist/static/js/runtime~main.3bc28527.js.map",
+    "static/js/2.aedcd12f.chunk.js": "/vanthudkr/htactive-react-todolist/static/js/2.aedcd12f.chunk.js",
+    "static/js/2.aedcd12f.chunk.js.map": "/vanthudkr/htactive-react-todolist/static/js/2.aedcd12f.chunk.js.map",
+    "index.html": "/vanthudkr/htactive-react-todolist/index.html",
+    "precache-manifest.9fcde1bc85345dc8df1cbd48954f498f.js": "/vanthudkr/htactive-react-todolist/precache-manifest.9fcde1bc85345dc8df1cbd48954f498f.js",
+    "service-worker.js": "/vanthudkr/htactive-react-todolist/service-worker.js",
+    "static/css/main.07a820fa.chunk.css.map": "/vanthudkr/htactive-react-todolist/static/css/main.07a820fa.chunk.css.map"
   }
 }
