@@ -7,15 +7,19 @@ import ColorProvider from "./components/ColorProvider";
 const App = props => {
   const [page, setPage] = useState("");
 
-  const onChange = page => {
+  const onLogin = () => {
     setPage("home");
+  };
+
+  const onSignout = () => {
+    setPage("");
   };
 
   if (page !== "") {
     return (
       <ColorProvider>
         <div className="container">
-          <Header />
+          <Header page={page} onSignout={onSignout} />
         </div>
         <Home />
       </ColorProvider>
@@ -26,11 +30,11 @@ const App = props => {
         <div className="container">
           <Header
             page={page}
-            onLogin={onChange}
+            onLogin={onLogin}
             onChangeColor={props.changeColor}
           />
         </div>
-        <Login onLogin={onChange} color={props.color} />
+        <Login onLogin={onLogin} color={props.color} />
       </ColorProvider>
     );
   }

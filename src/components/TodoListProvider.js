@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TodoListContext from "../contexts/TodoListContext";
 
-const api = "http://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
+const api = "https://5ce4ac09c1ee360014725c9c.mockapi.io/todoList";
 
 export default props => {
   const [todos, setTodo] = useState([]);

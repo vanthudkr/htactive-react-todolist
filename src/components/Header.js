@@ -4,8 +4,10 @@ import ButtonColor from "./ButtonColor";
 import SignOut from "./SignOut";
 
 export default props => {
-  const page = props.page;
-  if (page === "") {
+  console.log("page", props.page);
+  const pages = props.page;
+
+  if (pages === "") {
     return (
       <div className="item item1">
         <h1 className="header__title">Todo React</h1>
@@ -21,7 +23,7 @@ export default props => {
         <h1 className="header__title">Todo React</h1>
         <ul className="header__actions">
           <Logo />
-          <SignOut onLogin={props.onLogin} />
+          <SignOut page={props.page} onSignout={props.onSignout} />
         </ul>
       </div>
     );
