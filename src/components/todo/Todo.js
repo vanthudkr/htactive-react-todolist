@@ -45,7 +45,6 @@ const Todo = props => {
     props.closeTodo(props.todo.id);
   };
 
-  console.log("text", props.todo.text);
   if (props.todo.isEdit === true) {
     return (
       <div className="task-edit">

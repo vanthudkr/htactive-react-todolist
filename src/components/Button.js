@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import ColorContext from "../contexts/ColorContext";
 
 export default props => {
-  console.log(props.onLogin);
   const { color } = useContext(ColorContext);
   return (
     <button

@@ -4,7 +4,6 @@ import ButtonColor from "./ButtonColor";
 import SignOut from "./SignOut";
 
 export default props => {
-  console.log("page", props.page);
   const pages = props.page;
 
   if (pages === "") {
