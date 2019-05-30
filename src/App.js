@@ -1,43 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Home from "./views/Home";
 import Header from "./components/Header";
 import Login from "./views/Login";
 import ColorProvider from "./components/ColorProvider";
 
-class App extends React.Component {
-  state = {
-    page: ""
+const App = props => {
+  const [page, setPage] = useState("");
+
+  const onChange = page => {
+    setPage("home");
   };
 
-  onChange = page =>
-    this.setState({
-      page
-    });
-
-  render() {
-    if (this.state.page !== "") {
-      return (
-        <>
-          <ColorProvider>
-            <div className="container">
-              <Header />
-            </div>
-            <Home />
-          </ColorProvider>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <ColorProvider>
-            <div className="container">
-              <Header onChangeColor={this.changeColor} />
-            </div>
-            <Login onLogin={this.onChange} color={this.state.color} />
-          </ColorProvider>
-        </>
-      );
-    }
+  if (page !== "") {
+    return (
+      <ColorProvider>
+        <div className="container">
+          <Header />
+        </div>
+        <Home />
+      </ColorProvider>
+    );
+  } else {
+    return (
+      <ColorProvider>
+        <div className="container">
+          <Header
+            page={page}
+            onLogin={onChange}
+            onChangeColor={props.changeColor}
+          />
+        </div>
+        <Login onLogin={onChange} color={props.color} />
+      </ColorProvider>
+    );
   }
-}
+};
 export default App;

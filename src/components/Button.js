@@ -3,12 +3,13 @@ import ColorContext from "../contexts/ColorContext";
 
 export default props => {
   const { color } = useContext(ColorContext);
+
   return (
     <button
       style={{ backgroundColor: color }}
       className="btn signin-button"
       type="button"
-      onClick={() => props.onLogin("home")}
+      onClick={() => props.onLogin()}
     >
       {props.text}
     </button>

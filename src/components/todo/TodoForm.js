@@ -1,46 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-class TodoForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.textInput = React.createRef();
-  }
-  state = {
-    text: ""
+const TodoForm = props => {
+  const [text, setText] = useState("");
+  const textInput = React.createRef();
+
+  useEffect(() => {
+    textInput.current.focus();
+  });
+
+  const handleChange = event => {
+    setText(event.target.value);
   };
 
-  componentDidMount() {
-    this.textInput.current.focus();
-  }
-
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state.text);
-    this.setState({
-      text: ""
-    });
+    props.onSubmit(text);
+    setText("");
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          ref={this.textInput}
-          className="task-form__input"
-          name="text"
-          value={this.state.text}
-          onChange={this.handleChange}
-          placeholder="What needs to be done?"
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        ref={textInput}
+        className="task-form__input"
+        name="text"
+        value={text}
+        onChange={handleChange}
+        placeholder="What needs to be done?"
+      />
+    </form>
+  );
+};
 
 export default TodoForm;

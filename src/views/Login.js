@@ -1,11 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import Content from "../components/Content";
 import "./Login.css";
 
-class Login extends Component {
-  render() {
-    return <Content onLogin={this.props.onLogin} />;
-  }
-}
+const Login = props => {
+  return <Content onLogin={props.onLogin} />;
+};
 
 export default Login;

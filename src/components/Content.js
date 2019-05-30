@@ -1,23 +1,19 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 
-class Content extends Component {
-  state = {
-    socials: ["google", "github", "twitter"]
-  };
+const Content = props => {
+  const [socials] = useState(["google", "github", "twitter"]);
 
-  render() {
-    return (
-      <div className="flexcontainer">
-        <div className="signin">
-          <h1 className="sign-in__heading">Sign in</h1>
-          {this.state.socials.map((s, key) => (
-            <Button key={key} text={s} onLogin={this.props.onLogin} />
-          ))}
-        </div>
+  return (
+    <div className="flexcontainer">
+      <div className="signin">
+        <h1 className="sign-in__heading">Sign in</h1>
+        {socials.map((s, key) => (
+          <Button key={key} text={s} onLogin={props.onLogin} />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Content;

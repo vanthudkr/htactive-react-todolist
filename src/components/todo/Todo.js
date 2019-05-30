@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
@@ -25,120 +25,112 @@ const defaultProps = {
   onClick: () => {}
 };
 
-export default class Todo extends Component {
-  state = {
-    text: this.props.todo.text
+const Todo = props => {
+  const [text, setText] = useState(props.todo.text);
+
+  const handleChange = event => {
+    setText(event.target.value);
   };
 
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    if (this.state.text) {
-      this.props.updateTodo(this.state.text, this.props.todo.id);
+    if (text) {
+      props.updateTodo(text, props.todo.id);
     }
   };
 
-  handleClose = event => {
+  const handleClose = event => {
     event.preventDefault();
-    this.setState({ text: this.props.todo.text });
-    this.props.closeTodo(this.props.todo.id);
+    setText(props.todo.text);
+    props.closeTodo(props.todo.id);
   };
 
-  render() {
-    console.log("vao", this.props);
-    if (this.props.todo.isEdit === true) {
-      return (
-        <div className="task-edit">
-          <div
-            className="task-item task-item--completed item-input"
-            tabIndex="0"
-          >
-            <form className="style-form" onSubmit={this.handleSubmit}>
-              <input
-                name="text"
-                className="task-form__input__edit"
-                type="text"
-                placeholder="To do"
-                value={this.state.text}
-                onChange={this.handleChange}
-              />
-            </form>
-            <div className="cell padding-left-cell-edit">
-              <button
-                className="btn btn--icon task-item__button"
-                type="button"
-                onClick={this.handleClose}
-              >
-                <i className="fas fa-times" />
-              </button>
+  console.log("text", props.todo.text);
+  if (props.todo.isEdit === true) {
+    return (
+      <div className="task-edit">
+        <div className="task-item task-item--completed item-input" tabIndex="0">
+          <form className="style-form" onSubmit={handleSubmit}>
+            <input
+              name="text"
+              className="task-form__input__edit"
+              type="text"
+              placeholder="To do"
+              value={text}
+              onChange={handleChange}
+            />
+          </form>
+          <div className="cell padding-left-cell-edit">
+            <button
+              className="btn btn--icon task-item__button"
+              type="button"
+              onClick={handleClose}
+            >
+              <i className="fas fa-times" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="task-list">
+        <div
+          className={
+            "task-item " + (props.todo.complete ? "task-item--completed" : "")
+          }
+          onClick={props.toggleComplete}
+          tabIndex="0"
+        >
+          <div className="cell">
+            <button
+              className={
+                "btn btn--icon " +
+                (props.todo.complete
+                  ? "task-item__button-completed"
+                  : "task-item__button")
+              }
+              type="button"
+            >
+              <i className="fas fa-check" />
+            </button>
+          </div>
+          <div className="cell task-name">
+            <div
+              className="task-item__title"
+              style={{ paddingLeft: 20 }}
+              tabIndex="0"
+            >
+              {props.todo.text}
             </div>
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div className="task-list">
-          <div
-            className={
-              "task-item " +
-              (this.props.todo.complete ? "task-item--completed" : "")
-            }
-            onClick={this.props.toggleComplete}
-            tabIndex="0"
-          >
-            <div className="cell">
-              <button
-                className={
-                  "btn btn--icon " +
-                  (this.props.todo.complete
-                    ? "task-item__button-completed"
-                    : "task-item__button")
-                }
-                type="button"
-              >
-                <i className="fas fa-check" />
-              </button>
-            </div>
-            <div className="cell task-name">
-              <div
-                className="task-item__title"
-                style={{ paddingLeft: 20 }}
-                tabIndex="0"
-              >
-                {this.props.todo.text}
-              </div>
-            </div>
-          </div>
-          <div className="task-item">
-            <div className="cell padding-cell">
-              <button
-                className="btn btn--icon task-item__button"
-                type="button"
-                onClick={this.props.editTodo}
-              >
-                <i className="fas fa-pencil-alt" />
-              </button>
-              <button
-                className="btn btn--icon task-item__button"
-                type="button"
-                onClick={() =>
-                  window.confirm("Are you sure?") && this.props.onDelete()
-                }
-              >
-                <i className="fas fa-trash" />
-              </button>
-            </div>
+        <div className="task-item">
+          <div className="cell padding-cell">
+            <button
+              className="btn btn--icon task-item__button"
+              type="button"
+              onClick={props.editTodo}
+            >
+              <i className="fas fa-pencil-alt" />
+            </button>
+            <button
+              className="btn btn--icon task-item__button"
+              type="button"
+              onClick={() =>
+                window.confirm("Are you sure?") && props.onDelete()
+              }
+            >
+              <i className="fas fa-trash" />
+            </button>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
-}
+};
 
 Todo.propTypes = propTypes;
 Todo.defaultProps = defaultProps;
+
+export default Todo;
