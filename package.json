@@ -11,7 +11,7 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-responsive-modal": "^4.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-spinners": "^0.5.4",
     "shortid": "^2.2.14",
     "spinners": "^1.2.2",
